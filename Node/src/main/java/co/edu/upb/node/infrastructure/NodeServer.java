@@ -48,7 +48,7 @@ public class NodeServer {
 
             AppResponse<Boolean> appResponse = this.nodeRegistry.subscribeNode(this.conversionManager);
 
-            if(!appResponse.data()){
+            if(!appResponse.getData()){
                 this.subscribeNode(iterations+1);
             }
 
