@@ -2,6 +2,7 @@ package co.edu.upb.node.application;
 
 import co.edu.upb.node.domain.interfaces.application.IManagerStats;
 import co.edu.upb.node.domain.interfaces.application.IWorkersManager;
+import co.edu.upb.node.domain.models.AppResponse;
 
 public class WorkersManager implements IManagerStats, IWorkersManager {
     @Override
@@ -20,7 +21,7 @@ public class WorkersManager implements IManagerStats, IWorkersManager {
     }
 
     @Override
-    public void submitTask(Runnable task) {
-
+    public AppResponse<Boolean> submitTask(Runnable task) {
+        return null;
     }
 }
