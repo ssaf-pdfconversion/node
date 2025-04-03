@@ -9,7 +9,11 @@ public class Environment {
     private Dotenv dotenv;
 
     private Environment(){
-        this.dotenv = Dotenv.load();
+        String configDir = System.getProperty("config.dir", "/home/node/environment");
+        dotenv = Dotenv.configure()
+                .directory(configDir)
+                .filename(".env")
+                .load();
     }
 
     public static Environment getInstance(){
