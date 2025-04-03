@@ -1,4 +1,4 @@
-package co.edu.upb.node.domain.models;
+package co.edu.upb.app.domain.models;
 
 import java.io.Serializable;
 
