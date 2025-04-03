@@ -1,6 +1,6 @@
 package co.edu.upb.node.domain.interfaces.infrastructure;
 
-import co.edu.upb.node.domain.models.AppResponse;
+import co.edu.upb.app.domain.models.AppResponse;
 import co.edu.upb.node.domain.models.Conversion;
 import co.edu.upb.node.domain.models.File;
 import co.edu.upb.node.domain.models.NodeReport;

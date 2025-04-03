@@ -2,7 +2,7 @@ package co.edu.upb.node.application;
 
 import co.edu.upb.node.domain.interfaces.application.IManagerStats;
 import co.edu.upb.node.domain.interfaces.application.IWorkersManager;
-import co.edu.upb.node.domain.models.AppResponse;
+import co.edu.upb.app.domain.models.AppResponse;
 
 public class WorkersManager implements IManagerStats, IWorkersManager {
     @Override
