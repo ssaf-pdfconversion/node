@@ -4,14 +4,15 @@ import co.edu.upb.node.domain.interfaces.infrastructure.InterfaceNode;
 import co.edu.upb.node.domain.interfaces.util.IChromeExecutor;
 import co.edu.upb.node.domain.interfaces.util.IOfficeExecutor;
 import co.edu.upb.app.domain.models.AppResponse;
-import co.edu.upb.node.domain.models.Conversion;
 import co.edu.upb.node.domain.models.File;
+import co.edu.upb.node.domain.models.Iteration;
 import co.edu.upb.node.domain.models.NodeReport;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class ConversionManager extends UnicastRemoteObject implements InterfaceNode {
 
@@ -24,17 +25,13 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
     }
 
     @Override
-    public AppResponse<File> dispatchOffice(Conversion file) throws RemoteException {
-        //TODO: Change implementation for office dispatch
-        System.out.println("Ejecución de dispatchOffice con timestamp " + getTimestamp());
-        return new AppResponse<>(true, "Conversión office de desde el nodo con timestamp " + getTimestamp(), new File("", 0.0, getTimestamp(), 1, 1));
+    public AppResponse<Map<File, Iteration>> dispatchOffice(String file) throws RemoteException {
+        return null;
     }
 
     @Override
-    public AppResponse<File> dispatchURL(Conversion url) throws RemoteException {
-        //TODO: Change implementation for url dispatch
-        System.out.println("Ejecución de dispatchURL con timestamp " + getTimestamp());
-        return new AppResponse<>(true, "Conversión url de desde el nodo con timestamp " + getTimestamp(), new File("", 0.0, getTimestamp(), 1, 1));
+    public AppResponse<Map<File, Iteration>> dispatchURL(String url) throws RemoteException {
+        return null;
     }
 
     @Override

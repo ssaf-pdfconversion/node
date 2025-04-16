@@ -3,7 +3,9 @@ package co.edu.upb.node.domain.models;
 import java.io.Serial;
 import java.io.Serializable;
 
-public record File(String data, Long size, String timestamp, Integer fileTypeId) implements Serializable {
+//nodeID is BIOS UUID
+public record Iteration(String initTimestamp, String nodeId) implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
 }

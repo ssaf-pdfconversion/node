@@ -8,3 +8,4 @@ public record NodeReport(Integer activeTasks, Double cpuUsage, Integer queueLeng
     @Serial
     private static final long serialVersionUID = 1L;
 }
+
