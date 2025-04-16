@@ -4,7 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 //nodeID is BIOS UUID
-public record Iteration(String initTimestamp, String nodeId) implements Serializable {
+public record Iteration(String initTimestamp, String endTimestamp, String nodeId) implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
