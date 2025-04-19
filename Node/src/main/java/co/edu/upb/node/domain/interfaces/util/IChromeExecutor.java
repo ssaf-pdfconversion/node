@@ -4,5 +4,5 @@ import co.edu.upb.node.domain.models.Conversion;
 import co.edu.upb.node.domain.models.File;
 
 public interface IChromeExecutor {
-    File convertFromURLToPDF(Conversion url);
+    File convertFromURLToPDF(String url);
 }
