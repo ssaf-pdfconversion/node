@@ -1,17 +1,40 @@
 package co.edu.upb.node.util;
-
-import co.edu.upb.node.domain.interfaces.application.IWorkersManager;
-import co.edu.upb.node.domain.interfaces.util.IChromeExecutor;
-import co.edu.upb.node.domain.models.Conversion;
 import co.edu.upb.node.domain.models.File;
+import java.util.Base64;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Instant;
 
-public class ChromeExecutor extends AbstractExecutor implements IChromeExecutor {
-    public ChromeExecutor(IWorkersManager workersManager) {
-        super(workersManager);
+public class ChromeExecutor  {
+
+    private final UrlPDFConverter converter;
+
+    public ChromeExecutor(String chromePath) {
+        this.converter = new UrlPDFConverter(chromePath);
     }
 
-    @Override
-    public File convertFromURLToPDF(Conversion url) {
-        return null;
+
+
+    public File execute(String url) throws Exception {
+        Instant start = Instant.now();
+
+        Path pdf = converter.convertUrlToPdfTemp(url);
+        Instant end = Instant.now();
+
+        byte[] pdfBytes = Files.readAllBytes(pdf);
+        String pdfBase64 = Base64.getEncoder().encodeToString(pdfBytes);
+
+
+        Files.deleteIfExists(pdf);
+
+        return new File(
+                pdfBase64,
+                (long) pdfBytes.length,
+                Instant.now().toString(),
+                2,
+                url.replaceAll("[^a-zA-Z0-9]", "_") + ".pdf"
+        );
     }
+    
+   
 }

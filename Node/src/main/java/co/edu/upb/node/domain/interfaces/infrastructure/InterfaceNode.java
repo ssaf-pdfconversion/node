@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 import java.util.Map;
 
 public interface InterfaceNode extends Remote {
-    public AppResponse<Map<File, Iteration>> dispatchOffice(String file) throws RemoteException;
+    public AppResponse<Map<File, Iteration>> dispatchOffice(String file, String originalFilename) throws RemoteException;
     public AppResponse<Map<File, Iteration>> dispatchURL(String url) throws RemoteException;
     public AppResponse<NodeReport> getReport() throws RemoteException;
 }

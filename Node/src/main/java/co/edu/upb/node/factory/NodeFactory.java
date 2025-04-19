@@ -4,6 +4,7 @@ import co.edu.upb.node.application.ConversionManager;
 import co.edu.upb.node.application.WorkersManager;
 import co.edu.upb.node.config.Environment;
 import co.edu.upb.app.domain.interfaces.infrastructure.InterfacePublisher;
+import co.edu.upb.node.domain.interfaces.infrastructure.InterfaceNode;
 import co.edu.upb.node.infrastructure.NodeServer;
 import co.edu.upb.node.util.ChromeExecutor;
 import co.edu.upb.node.util.OfficeExecutor;
@@ -19,23 +20,23 @@ public class NodeFactory {
 
     private InterfacePublisher registry;
 
-    public NodeServer getNodeServerInstance(){
+    public NodeServer getNodeServerInstance() throws Exception {
 
-        WorkersManager workersManager = new WorkersManager();
-        OfficeExecutor officeExecutor = new OfficeExecutor(workersManager);
-        ChromeExecutor chromeExecutor = new ChromeExecutor(workersManager);
+            //String sofficePath = "C:\\Program Files\\LibreOffice\\program\\soffice.exe";
+            String sofficePath= Environment.getInstance().getDotenv().get("SOFFICE_PATH");
 
-        ConversionManager conversionManager;
-        try {
-            conversionManager = new ConversionManager(officeExecutor, chromeExecutor);
-        } catch (RemoteException e) {
-            throw new RuntimeException("Error initializing ConversionManager", e);
-        }
+            //String chromePath  = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+            String chromePath=Environment.getInstance().getDotenv().get("CHROME_PATH");
+            int threadCount = 3;
 
-        //Look for the implementation of the RMI registry of the App Server.
-        registry = lookupServer();
+        InterfaceNode service =
+                new ConversionManager(sofficePath, chromePath, threadCount);
 
-        return new NodeServer(conversionManager, registry);
+
+            //Look for the implementation of the RMI registry of the App Server.
+            registry = lookupServer();
+
+            return new NodeServer(service, registry);
     }
 
     private InterfacePublisher lookupServer(){
