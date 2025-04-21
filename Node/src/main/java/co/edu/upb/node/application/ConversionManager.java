@@ -8,7 +8,8 @@ import co.edu.upb.node.domain.models.NodeReport;
 import co.edu.upb.node.util.ChromeExecutor;
 import co.edu.upb.node.util.OfficeExecutor;
 import co.edu.upb.node.util.SystemInfo;
-
+import java.lang.management.ManagementFactory;
+import com.sun.management.OperatingSystemMXBean;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.Instant;
@@ -19,12 +20,13 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class ConversionManager extends UnicastRemoteObject implements InterfaceNode {
 
     private final OfficeExecutor officeExec;
     private final ChromeExecutor chromeExec;
-    private final ExecutorService pool;
+    private final ThreadPoolExecutor pool;
     private final String nodeId = SystemInfo.getMachineUUID();
 
 
@@ -36,7 +38,7 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
         super();
         this.officeExec = new OfficeExecutor(sofficePath);
         this.chromeExec = new ChromeExecutor(chromePath);
-        this.pool       = Executors.newFixedThreadPool(threadCount);
+        this.pool       = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadCount);
     }
 
     @Override
@@ -90,7 +92,6 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
                     true,
                     "URL to PDF conversion successful",
                     Collections.singletonMap(result, iter)
-
             );
 
         } catch (Exception e) {
@@ -107,9 +108,25 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
 
     @Override
     public AppResponse<NodeReport> getReport() throws RemoteException {
-        //TODO: Change implementation for getReport
-        System.out.println("Ejecución de getReport con timestamp " + getTimestamp());
-        return new AppResponse<>(true, "Reporte del nodo con timestamp " + getTimestamp(), new NodeReport(0, 0.0, 0));
+
+        int activeTasks  = pool.getActiveCount();
+        int queueLength  = pool.getQueue().size();
+
+        //get CPU usage
+        OperatingSystemMXBean osBean =
+                ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+        double cpuLoad = osBean.getProcessCpuLoad();
+        double cpuUsage = cpuLoad < 0 ? 0.0 : cpuLoad * 100; // negative means “not available”
+
+        String msg = String.format(
+                "Nodo %s → active=%d, queued=%d, cpu=%.1f%%",
+                nodeId, activeTasks, queueLength, cpuUsage
+        );
+
+        System.out.println(msg);
+
+        NodeReport report = new NodeReport(activeTasks, cpuUsage, queueLength);
+        return new AppResponse<>(true, msg, report);
     }
 
     //TODO: Remove this private function when implementation is done
