@@ -104,8 +104,6 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
     }
 
 
-
-
     @Override
     public AppResponse<NodeReport> getReport() throws RemoteException {
 

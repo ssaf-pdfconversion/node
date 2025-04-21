@@ -18,18 +18,22 @@ public class NodeServer {
     private final String port;
     private final InterfaceNode conversionManager;
     private final InterfacePublisher nodeRegistry;
+    private final String serverIp;
 
     public NodeServer(InterfaceNode conversionManager, InterfacePublisher nodeRegistry){
         this.conversionManager  =  conversionManager;
         this.port = Environment.getInstance().getDotenv().get("NODESERVER_PORT");
         this.nodeRegistry = nodeRegistry;
+        this.serverIp = Environment.getInstance().getDotenv().get("SERVER_IP");
     }
 
     public void run() {
         try {
+            System.setProperty("java.rmi.server.hostname", serverIp);
+
             LocateRegistry.createRegistry(Integer.parseInt(port));
             try {
-                Naming.rebind("//127.0.0.1:"+port+"/node", conversionManager);
+                Naming.rebind("//"+serverIp+":"+port+"/node", conversionManager);
 
                 //Subscribe the node to the app server (registry)
                 Boolean isSubscribed = this.subscribeNode(1);
