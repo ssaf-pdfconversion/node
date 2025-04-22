@@ -14,6 +14,7 @@ public class Environment {
                 .directory(configDir)
                 .filename(".env")
                 .load();
+//        dotenv = Dotenv.load();
     }
 
     public static Environment getInstance(){
