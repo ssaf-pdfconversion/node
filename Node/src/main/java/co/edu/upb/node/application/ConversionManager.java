@@ -17,7 +17,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -47,6 +46,9 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
             String originalFilename
     ) {
         Instant start = Instant.now();
+
+        System.out.println("Office conversion requested at " + start);
+
         try {
             Future<File> f = pool.submit(() ->
                     officeExec.execute(base64File, originalFilename)
@@ -71,7 +73,7 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
         } catch (Exception e) {
             return new AppResponse< Map<File,Iteration> >(
                     false,
-                    "office conversion failed: " + e.getMessage(),
+                    "Office conversion failed: " + e.getMessage(),
                     Collections.emptyMap()
             );
         }
@@ -80,6 +82,9 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
     @Override
     public AppResponse<Map<File,Iteration>> dispatchURL(String url) {
         Instant start = Instant.now();
+
+        System.out.println("URL conversion requested at " + start);
+
         try {
             Future<File> f = pool.submit(() ->
                     chromeExec.execute(url)
