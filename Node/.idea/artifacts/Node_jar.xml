@@ -4,6 +4,7 @@
     <root id="archive" name="Node.jar">
       <element id="module-output" name="Node" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/cdimascio/dotenv-java/2.2.0/dotenv-java-2.2.0.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: io.github.cdimascio:dotenv-java:2.2.0" />
     </root>
   </artifact>
 </component>
