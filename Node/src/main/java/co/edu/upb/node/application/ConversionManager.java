@@ -47,7 +47,7 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
     ) {
         Instant start = Instant.now();
 
-        System.out.println("Office conversion requested at " + start);
+        System.out.println("Office conversion requested at " + start + " for Office " + originalFilename);
 
         try {
             Future<File> f = pool.submit(() ->
@@ -62,7 +62,7 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
             );
 
             String timestamp = Instant.now().toString();
-            System.out.println("Office conversion on " + timestamp);
+            System.out.println("Office converted at " + timestamp + " for " + originalFilename);
 
             return new AppResponse<>(
 
@@ -83,7 +83,7 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
     public AppResponse<Map<File,Iteration>> dispatchURL(String url) {
         Instant start = Instant.now();
 
-        System.out.println("URL conversion requested at " + start);
+        System.out.println("URL conversion requested at " + start + " for URL " + url);
 
         try {
             Future<File> f = pool.submit(() ->
@@ -98,7 +98,7 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
             );
 
             String timestamp = Instant.now().toString();
-            System.out.println("URL conversion on " + timestamp);
+            System.out.println("URL converted at " + timestamp + " for " + url);
 
             return new AppResponse<Map<File,Iteration>>(
                     true,
