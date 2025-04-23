@@ -58,6 +58,10 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
                     end.toString(),
                     nodeId
             );
+
+            String timestamp = Instant.now().toString();
+            System.out.println("Office conversion on " + timestamp);
+
             return new AppResponse<>(
 
                     true,
@@ -87,6 +91,9 @@ public class ConversionManager extends UnicastRemoteObject implements InterfaceN
                     end.toString(),
                     nodeId
             );
+
+            String timestamp = Instant.now().toString();
+            System.out.println("URL conversion on " + timestamp);
 
             return new AppResponse<Map<File,Iteration>>(
                     true,
