@@ -20,6 +20,7 @@ public class UrlPDFConverter {
                 chromePath,
                 "--headless",
                 "--disable-gpu",
+                "--no-sandbox",
                 "--print-to-pdf=" + outputPdfPath,
                 url
         );
